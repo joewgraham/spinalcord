@@ -247,7 +247,7 @@ simConfig.analysis = {
     "iplot2Dnet": {
         "radius": 100,
         "showFig": True,
-        "saveFig": True,
+        "saveFig": False,
         "showConns": False,
     },
     
@@ -265,22 +265,27 @@ simConfig.analysis = {
 
 }
 
+simConfig.analysis = {}
+
 # CREATE SIMULATE ANALYZE  NETWORK ---------------------------------------------
 
 sim.createSimulateAnalyze(netParams=netParams, simConfig=simConfig)
 
-# sim.analysis.plotTraces(include=[0], showFig=True, saveFig=True)
-# sim.analysis.iplotTraces(include=[0], showFig=True, saveFig=True)
+sim.analysis.plotTraces(include=[0], showFig=True, saveFig=True)
+sim.analysis.iplotTraces(include=[0], showFig=True, saveFig=False)
 
-# sim.analysis.plotConn(feature='weight', groupby='cell', orderBy='y', showFig=True, saveFig=True)
-# sim.analysis.iplotConn(feature='weight', groupby='cell', orderBy='y', showFig=True, saveFig=True)
+sim.analysis.plotConn(feature='strength', includePre=['LF1', 'LF2', 'LF3'], includePost=['LF1', 'LF2', 'LF3'], groupBy='pop', orderBy='y', showFig=True, saveFig=True)
+sim.analysis.iplotConn(feature='strength', includePre=['LF1', 'LF2', 'LF3'], includePost=['LF1', 'LF2', 'LF3'], groupBy='pop', orderBy='y', showFig=True, saveFig=False)
 
-# sim.analysis.plot2Dnet(showConns=False, showFig=True, saveFig=True)
-# sim.analysis.plot2Dnet(showConns=True, showFig=True, saveFig=True)
-# sim.analysis.iplot2Dnet(radius=100, showConns=False, showFig=True, saveFig=True)
+sim.analysis.plotConn(feature='weight', groupBy='cell', orderBy='y', showFig=True, saveFig=True)
+sim.analysis.iplotConn(feature='weight', groupBy='cell', orderBy='y', showFig=True, saveFig=False)
 
-# sim.analysis.plotRaster(orderBy="y", showFig=True, saveFig=True)
-# sim.analysis.iplotRaster(orderBy="y", showFig=True, saveFig=True)
+sim.analysis.plot2Dnet(showConns=False, showFig=True, saveFig=True)
+sim.analysis.plot2Dnet(showConns=True, showFig=True, saveFig=True)
+sim.analysis.iplot2Dnet(radius=100, showConns=False, showFig=True, saveFig=False)
+
+sim.analysis.plotRaster(orderBy="y", showFig=True, saveFig=True)
+sim.analysis.iplotRaster(orderBy="y", showFig=True, saveFig=False)
 
 
 # netpyne_geppetto.netParams = netParams
