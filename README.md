@@ -2,9 +2,12 @@
 
 To run::
 
-    python spinalcord.py
+    ./runsim 1
+
+MPI isn't working for individual sims right now.
 
 To run in parallel::
 
-    mpiexec -np 8 nrniv -python spinalcord.py
+    ./runbatch 16
 
+Where "16" is the number of cores you want to use.

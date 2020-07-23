@@ -36,8 +36,8 @@ for runFile in runFiles:
 
 
 
-sim.analysis.plotTraces(include=[0], showFig=cfg.showFig, saveFig=cfg.saveFig)
-sim.analysis.iplotTraces(include=[0], showFig=cfg.showFig, saveFig=False)
+sim.analysis.plotTraces(oneFigPer='cell', overlay=True, showFig=cfg.showFig, saveFig=cfg.saveFig)
+sim.analysis.iplotTraces(oneFigPer='cell', overlay=True, showFig=cfg.showFig, saveFig=False)
 
 sim.analysis.plotConn(feature='strength', includePre=['LF1', 'LF2', 'LF3'], includePost=['LF1', 'LF2', 'LF3'], groupBy='pop', orderBy='y', showFig=cfg.showFig, saveFig=cfg.saveFig)
 sim.analysis.iplotConn(feature='strength', includePre=['LF1', 'LF2', 'LF3'], includePost=['LF1', 'LF2', 'LF3'], groupBy='pop', orderBy='y', showFig=cfg.showFig, saveFig=False)
@@ -51,3 +51,6 @@ sim.analysis.iplot2Dnet(radius=100, showConns=False, showFig=cfg.showFig, saveFi
 
 sim.analysis.plotRaster(orderBy="y", showFig=cfg.showFig, saveFig=cfg.saveFig)
 sim.analysis.iplotRaster(orderBy="y", showFig=cfg.showFig, saveFig=False)
+
+
+

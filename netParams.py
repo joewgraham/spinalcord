@@ -1,10 +1,15 @@
 from netpyne import specs, sim
 
+try:
+    from __main__ import cfg
+except:
+    from cfg import cfg
+
 netParams = specs.NetParams()
 
 netParams.propVelocity = 100.0       # propagation velocity (um/ms)
 netParams.probLengthConst = 100      # length constant for conn probability (um)
-#netParams.defaultThreshold = -20    # voltage threshold to count as a spike (mV)
+netParams.defaultThreshold = cfg.defaultThreshold  # voltage threshold to count as a spike (mV)
 
 
 
@@ -59,21 +64,33 @@ netParams.cellParams['mn_s'] = {
     "secs": {
         "soma": {
             "geom": {
-                "diam": 10,
-                "L": 10,
+                "diam": 5,
+                "L": 5,
                 "Ra": 150.0,
-                "cm": 1
+                "cm": 1,
             },
             "mechs": {
-                "hh": {
-                    "gnabar": 1.2, #0.12,
-                    "gkbar": 0.36, ##0.036,
-                    "gl": 0.0003,
-                    "el": -54.3
-                }
-            }
-        }
-    }
+
+                "pas": {
+                    "g": cfg.pas_g,
+                    "e": cfg.pas_e,
+                },
+
+                "namot": {
+                    "gbar": cfg.namot_gbar,     # Default: 0.02
+                },
+
+                "kamot": {
+                    "gbar": cfg.kamot_gbar,     # Default: 0.02
+                },
+
+                "kdrmot": {
+                    "gbar": cfg.kdrmot_gbar,     # Default: 0.02
+                },
+
+            },
+        },
+    },
 }
 
 
@@ -92,29 +109,27 @@ netParams.connParams['mn->mn'] = {
     "postConds": {"cellType": ["mn_s"]},
     "synsPerConn": 1,
     "synMech": "exc",
-    "probability": "10 * probLengthConst/(probLengthConst + dist_3D * 10)",
-    "weight": 0.003, 
+    "probability": str(cfg.distScale) + "* probLengthConst/(probLengthConst + dist_3D *" + str(cfg.distScale) + ") *" + str(cfg.connScale),
+    "weight": cfg.connWeight, 
     "delay": "dist_3D/10", 
 }
 
-
+cfg.connScale = 1.0
+cfg.distScale = 10.0
 
 netParams.stimSourceParams['IClamp0'] = {
     "type": "IClamp",
-    "del": 20,
-    "dur": 5,
-    "amp": 1
+    "del": cfg.IClamp0_del,
+    "dur": cfg.IClamp0_dur,
+    "amp": cfg.IClamp0_amp,
 }
 
-
-
-netParams.stimTargetParams['IClamp->gid0'] = {
+netParams.stimTargetParams['IClamp0->target'] = {
     "source": "IClamp0",
-    "conds": {"cellList": [0,]},
-    "sec": "soma",
-    "loc": 0.5
+    "conds": cfg.IClamp0_conds,
+    "sec": cfg.IClamp0_sec,
+    "loc": cfg.IClamp0_loc,
 }
-
 
 
 

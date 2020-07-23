@@ -969,28 +969,28 @@ def plot_relation(yarray, xvector, params, swapaxes=False, param_labels=None, ti
                 subplotind += 1
 
 
-    # Make all plots on the same row use the same y axis limits
-    for row in np.arange(rows):
-        rowax = axes[row*cols : row*cols+cols]
-        ylims = []
-        for ax in rowax:
-            ylims.extend(list(ax.get_ylim()))
-        ylim = (min(ylims), max(ylims))
-        for ax in rowax:
-            ax.set_ylim(ylim)
+    # # Make all plots on the same row use the same y axis limits
+    # for row in np.arange(rows):
+    #     rowax = axes[row*cols : row*cols+cols]
+    #     ylims = []
+    #     for ax in rowax:
+    #         ylims.extend(list(ax.get_ylim()))
+    #     ylim = (min(ylims), max(ylims))
+    #     for ax in rowax:
+    #         ax.set_ylim(ylim)
 
-    # Make all plots use the same y axis limits, if shareyall option is True
-    if shareyall:
-        ylims = []
-        for row in np.arange(rows):
-            rowax = axes[row*cols : row*cols+cols]
-            for ax in rowax:
-                ylims.extend(list(ax.get_ylim()))
-        ylim = (min(ylims), max(ylims))
-        for row in np.arange(rows):
-            rowax = axes[row*cols : row*cols+cols]
-            for ax in rowax:
-                ax.set_ylim(ylim)
+    # # Make all plots use the same y axis limits, if shareyall option is True
+    # if shareyall:
+    #     ylims = []
+    #     for row in np.arange(rows):
+    #         rowax = axes[row*cols : row*cols+cols]
+    #         for ax in rowax:
+    #             ylims.extend(list(ax.get_ylim()))
+    #     ylim = (min(ylims), max(ylims))
+    #     for row in np.arange(rows):
+    #         rowax = axes[row*cols : row*cols+cols]
+    #         for ax in rowax:
+    #             ax.set_ylim(ylim)
 
     # Remove space between subplots
     if fig is None:
@@ -1080,11 +1080,17 @@ def plot_vtraces(batchname, batchdatadir=None, cellIDs=None, secs=None, timerang
 
 
 
-def plot_traces(batchname, traces, cellIDs=None, param_labels=None, title=None, filename=None, save=True, outputdir=None):
-    """If secs is None, all compartment voltage traces are plotted. secs can also be a list of compartment names, e.g. secs=['soma', 'Bdend1'].
-    If cellID is None, all cells will be plotted (individually).  cellID can also be a list of cell IDs or an integer value."""
+def plot_traces(batchname, traces, batchdatadir=None, cellIDs=None, param_labels=None, title=None, filename=None, save=True, outputdir=None):
+    """If cellID is None, all cells will be plotted (individually).  cellID can also be a list of cell IDs or an integer value."""
 
-    params, data = batch_utils.load_batch(batchname)
+    if type(batchname) == str:
+        if batchdatadir is None:
+            batchdatadir = os.path.join(myoutputdir, batchname, mybatchdatadir)
+        params, data = batch_utils.load_batch(batchname, batchdatadir=batchdatadir)
+    elif type(batchname) == tuple:
+        batchname, params, data = batchname
+    else:
+        raise Exception()
 
     if outputdir is None:
         outputdir = os.path.join(myoutputdir, batchname, mybatchfigdir)
@@ -1120,10 +1126,10 @@ def plot_traces(batchname, traces, cellIDs=None, param_labels=None, title=None, 
                 os.mkdir(outputdir)
             if filename is None:
                 fig1.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_" + tracename + "_trace_1.png"))
-                fig2.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_" + tracename + "_trace_2.png"))
+                #fig2.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_" + tracename + "_trace_2.png"))
             else:
                 fig1.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_trace_1_" + filename + ".png"))
-                fig2.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_trace_2_" + filename + ".png"))
+                #fig2.savefig(os.path.join(outputdir, batchname + "_" + cellLabel + "_trace_2_" + filename + ".png"))
 
 
 
