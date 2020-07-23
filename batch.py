@@ -17,8 +17,8 @@ figFolder  = 'batch_figures'
 
 params = specs.ODict()
 
-params['connScale'] = [0.2, 1.0, 2]
-params['connWeight'] = [0.0025, 0.003, 0.0035]
+params['connScale'] = [0.2, 0.5, 1.0]
+params['connWeight'] = [0.0020, 0.0025, 0.003]
 
 #params['IClamp0_amp'] = [0.04, 0.05, 0.06]
 #params['pas_e']       = [-80, -75, -70]

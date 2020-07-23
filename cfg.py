@@ -16,7 +16,7 @@ cfg.duration = 2000
 cfg.dt = 0.025
 cfg.verbose = False
 cfg.recordStep = 0.1
-cfg.defaultThreshold = 0
+cfg.defaultThreshold = -20
 
 cfg.saveJson = True
 cfg.saveDataInclude = ['simData', 'simConfig', 'netParams', 'net']
